@@ -1,0 +1,29 @@
+/* glue: 0.3 hash: c50ccd47e9 */
+.sprite-images-ac-createlink,
+.sprite-images-ac-strikethrough,
+.sprite-images-ac-outdent,
+.sprite-images-ac-insertorderedlist,
+.sprite-images-ac-insertimage,
+.sprite-images-ac-insertunorderedlist,
+.sprite-images-ac-indent,
+.sprite-images-ac-underline,
+.sprite-images-ac-justifyright,
+.sprite-images-ac-justifyleft,
+.sprite-images-ac-justifyfull,
+.sprite-images-ac-justifycenter,
+.sprite-images-ac-italic,
+.sprite-images-ac-bold{background-image:url('images.png?c50ccd');background-repeat:no-repeat}
+.sprite-images-ac-createlink{background-position:0px 0px;width:15px;height:12px;}
+.sprite-images-ac-strikethrough{background-position:-15px 0px;width:14px;height:10px;}
+.sprite-images-ac-outdent{background-position:0px -12px;width:14px;height:11px;}
+.sprite-images-ac-insertorderedlist{background-position:-29px 0px;width:13px;height:14px;}
+.sprite-images-ac-insertimage{background-position:0px -23px;width:14px;height:14px;}
+.sprite-images-ac-insertunorderedlist{background-position:-14px -23px;width:13px;height:13px;}
+.sprite-images-ac-indent{background-position:-14px -12px;width:13px;height:11px;}
+.sprite-images-ac-underline{background-position:-27px -23px;width:10px;height:12px;}
+.sprite-images-ac-justifyright{background-position:-42px 0px;width:12px;height:11px;}
+.sprite-images-ac-justifyleft{background-position:-42px -11px;width:12px;height:11px;}
+.sprite-images-ac-justifyfull{background-position:-42px -22px;width:12px;height:11px;}
+.sprite-images-ac-justifycenter{background-position:0px -37px;width:12px;height:11px;}
+.sprite-images-ac-italic{background-position:-12px -37px;width:8px;height:10px;}
+.sprite-images-ac-bold{background-position:-20px -37px;width:10px;height:10px;}
