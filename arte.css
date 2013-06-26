@@ -1,13 +1,14 @@
 .arte {
+    margin-top:10px;
     border: 1px solid #BBB;
-    font: 12px Verdana, Arial;
     padding: 1px;
-    width: 584px
+    width: 100%
 }
 .arte .arte-controls {
     background-color: #DDD;
     border-bottom: 1px solid #BBB;
-    margin-bottom: 1px
+    margin-bottom: 1px;
+    padding:5px
 }
 .arte .arte-edit {
     height: 175px;
@@ -17,29 +18,21 @@
 }
 
 .arte .arte-control {
-    font: 9px Verdana, Arial;
-    padding: 3px;
-    background-color: #BBB;
-    border: 1pxsolid #AAA;
+    position:relative;
     display: inline-block;
-    margin:2px;
-    cursor:pointer
+    cursor:pointer;
+    vertical-align:middle;
+    margin-left:5px
 }
-
-
-.arte .arte-controls .arte-control.ac-bold                  { }
-.arte .arte-controls .arte-control.ac-italic                { }
-.arte .arte-controls .arte-control.ac-underline             { }
-.arte .arte-controls .arte-control.ac-strikethrough         { }
-.arte .arte-controls .arte-control.ac-insertorderedlist     { }
-.arte .arte-controls .arte-control.ac-insertunorderedlist   { }
-.arte .arte-controls .arte-control.ac-outdent               { }
-.arte .arte-controls .arte-control.ac-indent                { }
-.arte .arte-controls .arte-control.ac-justifyleft           { }
-.arte .arte-controls .arte-control.ac-justifycenter         { }
-.arte .arte-controls .arte-control.ac-justifyright          { }
-.arte .arte-controls .arte-control.ac-justifyfull           { }
-.arte .arte-controls .arte-control.ac-insertimage           { }
-.arte .arte-controls .arte-control.ac-createlink            { }
-.arte .arte-controls .arte-control.ac-inserthorizontalrule  { }
-.arte .arte-controls .arte-control.ac-blockquote            { }
+.arte .arte-control + .arte-control { 
+    margin-left:20px
+}
+.arte .arte-control:hover:after {
+    background:#e1e1e1;
+    content:" ";
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+}
