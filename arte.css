@@ -7,7 +7,6 @@
 .arte .arte-controls {
     background-color: #DDD;
     border-bottom: 1px solid #BBB;
-    height: 30px;
     margin-bottom: 1px
 }
 .arte .arte-edit {
@@ -18,6 +17,13 @@
 }
 
 .arte .arte-control {
+    font: 9px Verdana, Arial;
+    padding: 3px;
+    background-color: #BBB;
+    border: 1pxsolid #AAA;
+    display: inline-block;
+    margin:2px;
+    cursor:pointer
 }
 
 

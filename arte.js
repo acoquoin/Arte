@@ -19,14 +19,22 @@
  *
  */
 
-(function() {
+(function(w, d) {
 
     // Validator (JSHint - http://www.jshint.com/)
-    /*jshint browser:true, jquery:true */
+    /*jshint loopfunc:true */
     'use strict';
 
     // Stacking
     var Arte = function(settings) {
+        if(null === d.getElementById(settings.id)) {
+            throw new Error('Unavailable selector ID');
+
+        } else if('TEXTAREA' !== d.getElementById(settings.id).tagName) {
+            throw new Error('Selector should be an textarea tag');
+        
+        }
+
         this.init(settings);
     };
 
@@ -37,9 +45,9 @@
         id: null,
 
         // Active buttons
-        // null : Display all buttons
-        // ['bold, 'insertimage', ...] : Display selected buttons
-        display: null,
+        // Empty array display all buttons
+        // ['bold', 'insertimage', ...] : Display selected buttons
+        display: [],
 
         // Default content
         content: null,
@@ -60,14 +68,16 @@
             justifyfull: 'Justify text',
             insertimage: {
                 label: 'Insert image',
-                prompt: ['Enter image URL:', 'http://']
+                prompt: ['Enter image URL:', 'http://'],
+                pattern: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
             },
             createlink: {
                 label: 'Insert hyperlink',
-                prompt: ['Enter URL:', 'http://']
+                prompt: ['Enter URL:', 'http://'],
+                pattern: /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
             },
             inserthorizontalrule: 'Insert horizontal rule',
-            blockquote: 'Code'
+            blockquote: 'Insert Code'
         }
     };
 
@@ -78,12 +88,6 @@
      */
     Arte.prototype = {
 
-        // Elements instance
-        textareaElt: null,
-        containerElt: null,
-        controlsElt: null,
-        editElt: null,
-
         /**
          * 
          * 
@@ -91,26 +95,24 @@
         init: function(settings) {
 
             // Extend settings by default settings
-            settings = this.extendObject(Arte.settings, settings);
-
-            console.log(settings);
+            this.settings = this.extendObject(Arte.settings, settings);
 
             // Main container
-            this.containerElt = document.createElement('div');
+            this.containerElt = d.createElement('div');
             this.containerElt.className = 'arte';
 
             // Control container
-            this.controlsElt = document.createElement('div');
+            this.controlsElt = d.createElement('div');
             this.controlsElt.className = 'arte-controls';
 
             // Editor container
-            this.editElt = document.createElement('div');
+            this.editElt = d.createElement('div');
             this.editElt.className = 'arte-edit';
             this.editElt.contentEditable = true; 
             this.editElt.designMode = 'On';
 
             // Get textarea element ID
-            this.textareaElt = document.getElementById(settings.id);
+            this.textareaElt = d.getElementById(settings.id);
 
             // Hide textarea
             this.textareaElt.style.display = 'none';
@@ -127,31 +129,62 @@
             this.containerElt.appendChild(this.editElt);
 
             // XHTML compatibility
-            document.execCommand('styleWithCSS', false, 0);
+            var isMSIE = /*@cc_on!@*/false;
+            if(false === isMSIE) {
+                d.execCommand('styleWithCSS', false, 0);
+            }
 
-            console.log(settings.controls);
+            var self = this;
+
             // Loading controls
-            for(var i in settings.controls) {
-                console.log(i);
-                var buttonElt = document.createElement('i');
-                buttonElt.className = 'arte-control ac-' + i;
-                buttonElt.title = settings.controls[i].label || settings.controls[i];
-                this.controlsElt.appendChild(buttonElt);
+            for(var i in this.settings.controls) {
+
+                if (this.settings.controls.hasOwnProperty(i)) {
+                    if(0 < this.settings.display.length && -1 === this.settings.display.indexOf(i)) {
+                        continue;
+                    }
+
+                    var buttonElt = document.createElement('i');
+                    buttonElt.className = 'arte-control ac-' + i;
+                    buttonElt.title = this.settings.controls[i].label || this.settings.controls[i];
+                    buttonElt.command = i;
+                   buttonElt.onmousedown = function() {
+                        self.execute(this);
+                    };
+
+                    this.controlsElt.appendChild(buttonElt);
+                }
             }
         },
 
-        /**
-         * 
-         * 
-         */
+        execute: function(elt) {
+            var value,
+                command = elt.command,
+                datas = this.settings.controls[elt.command];
+
+            if('object' === typeof datas.prompt) {
+                value = w.prompt(datas.prompt[0], datas.prompt[1]);
+                if(null === value || 0 === value.length || datas.prompt[1] === value || ('object' === typeof datas.pattern && null === value.match(datas.pattern))) {
+                    return;
+                }
+            }
+            if(true === d.queryCommandSupported(command)) {
+                d.execCommand(command, false, value);
+            } else {
+                d.execCommand('formatBlock', 0, command);
+            }
+        },
+
         extendObject: function(from, to) {
             for (var i in to) {
-                try {
-                    // Property in destination object set; update its value.
-                    from[i] = 'object' === typeof to[i].constructor ? this.extendObject(from[i], to[i]) : to[i];
-                } catch(e) {
-                    // Property in destination object not set; create it and set its value.
-                    from[i] = to[i];
+                if (to.hasOwnProperty(i)) {
+                    try {
+                        // Property in destination object set; update its value.
+                        from[i] = 'object' === typeof to[i].constructor ? this.extendObject(from[i], to[i]) : to[i];
+                    } catch(e) {
+                        // Property in destination object not set; create it and set its value.
+                        from[i] = to[i];
+                    }
                 }
             }
             return from;
@@ -159,7 +192,7 @@
     };
 
 
-    // Assign Albox
+    // Assign Arte
     window.Arte = Arte;
 
-})();
+})(window, document);
