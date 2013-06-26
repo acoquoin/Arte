@@ -145,7 +145,7 @@
                     }
 
                     var buttonElt = document.createElement('i');
-                    buttonElt.className = 'arte-control ac-' + i;
+                    buttonElt.className = 'arte-control sprite-images-ac-' + i;
                     buttonElt.title = this.settings.controls[i].label || this.settings.controls[i];
                     buttonElt.command = i;
                    buttonElt.onmousedown = function() {
