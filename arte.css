@@ -27,12 +27,6 @@
 .arte .arte-control + .arte-control { 
     margin-left:20px
 }
-.arte .arte-control:hover:after {
-    background:#e1e1e1;
-    content:" ";
-    position:absolute;
-    width:100%;
-    height:100%;
-    top:0;
-    left:0;
+.arte .arte-control:hover {
+    box-shadow:0 0 10px #767676;
 }
