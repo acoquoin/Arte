@@ -1,0 +1,8 @@
+{
+    "name": "arte",
+    "version": "1.0.0",
+    "main": ["./arte.js", "./arte.css"],
+    "ignore": [
+        "test.html"
+    ]
+}
