@@ -94,47 +94,52 @@
          */
         init: function(settings) {
 
+            var self = this;
+
             // Extend settings by default settings
-            this.settings = this.extendObject(Arte.settings, settings);
+            self.settings = self.extendObject(Arte.settings, settings);
 
             // Main container
-            this.containerElt = d.createElement('div');
-            this.containerElt.className = 'arte';
+            self.containerElt = d.createElement('div');
+            self.containerElt.className = 'arte';
 
             // Control container
-            this.controlsElt = d.createElement('div');
-            this.controlsElt.className = 'arte-controls';
+            self.controlsElt = d.createElement('div');
+            self.controlsElt.className = 'arte-controls';
 
             // Editor container
-            this.editElt = d.createElement('div');
-            this.editElt.className = 'arte-edit';
-            this.editElt.contentEditable = true; 
-            this.editElt.designMode = 'On';
+            self.editElt = d.createElement('div');
+            self.editElt.className = 'arte-edit';
+            self.editElt.contentEditable = true; 
+            self.editElt.designMode = 'On';
 
             // Get textarea element ID
-            this.textareaElt = d.getElementById(settings.id);
+            self.textareaElt = d.getElementById(settings.id);
 
             // Hide textarea
-            this.textareaElt.style.display = 'none';
+            self.textareaElt.style.display = 'none';
 
             // Display in document
-            this.textareaElt.parentNode.insertBefore(this.containerElt, this.textareaElt);
+            self.textareaElt.parentNode.insertBefore(self.containerElt, self.textareaElt);
 
             // Assign content
-            this.editElt.innerHTML = settings.content || this.textareaElt.value;
+            self.editElt.innerHTML = settings.content || self.textareaElt.value;
+            
+            // onChange event
+            self.editElt.addEventListener('input', function() {
+                self.textareaElt.value = this.innerHTML;
+            }, false);
 
             // Assign controls and editable content on container element
-            this.containerElt.appendChild(this.textareaElt);
-            this.containerElt.appendChild(this.controlsElt);
-            this.containerElt.appendChild(this.editElt);
+            self.containerElt.appendChild(self.textareaElt);
+            self.containerElt.appendChild(self.controlsElt);
+            self.containerElt.appendChild(self.editElt);
 
             // XHTML compatibility
             var isMSIE = /*@cc_on!@*/false;
             if(false === isMSIE) {
                 d.execCommand('styleWithCSS', false, 0);
             }
-
-            var self = this;
 
             // Loading controls
             for(var i in this.settings.controls) {
